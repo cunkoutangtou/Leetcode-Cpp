@@ -19,3 +19,15 @@ public:
         return l;
     }
 };
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int db[127]={0},head=0,tail=0,ans=0;
+        for(;tail<s.size();tail++){
+            head=max(head,db[s[tail]-NULL]);
+            db[s[tail]-NULL]=tail+1;
+            ans=max(ans,tail-head+1);
+        }
+        return ans;
+    }
+};
