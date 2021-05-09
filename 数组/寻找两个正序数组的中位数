@@ -1,1 +1,54 @@
-
+class Solution {
+public:
+    ind findk(const vector<int>& nums1,const vector<int>& nums2,int K){
+        int l1=nums1.size(),l2=nums2.size();
+        int ind1=0,ind2=0;
+        while(1){
+            if(ind1==l1)
+            return nums2[K+ind2-1];
+            else if(ind2==l2)
+            return nums1[K+ind1-1];
+            if(K==1)
+            return min(nums1[ind1],nums2[ind2]);
+            int newind1=min(ind1+K/2-1,l1-1);
+            int newind2=min(ind2+K/2-1,l2-1);
+            if(nums1[newind1]<=nums2[newind2]){
+                K-=newind1-ind1+1;
+                ind1=newind1+1;
+            }
+            else{
+                K-=newind2-ind2+1;
+                ind2=newind2+1;
+            }
+        }
+    }
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n1=nums1.size(),n2=nums2.size();
+        int length=n1+n2;
+        if(length%2==0)
+        return (findk(nums1,nums2,length/2)+findk(nums1,nums2,length/2+1))/2.0;
+        else
+        return findk(nums1,nums2,(length+1)/2);
+    }
+};
+class Solution {
+public:
+int returnNth(vector<int>& v1,vector<int>& v2,int startIndex1,int startIndex2,int N){
+    if(startIndex1>=v1.size())return v2[startIndex2+N-1];
+    if(startIndex2>=v2.size())return v1[startIndex1+N-1];
+    if(N==1)
+        return v1[startIndex1]>v2[startIndex2]?v2[startIndex2]:v1[startIndex1];
+    int mid1=startIndex1+N/2-1>=v1.size()?INT_MAX:v1[startIndex1+N/2-1];
+    int mid2=startIndex2+N/2-1>=v2.size()?INT_MAX:v2[startIndex2+N/2-1];
+    if(mid1>mid2)
+        return returnNth(v1,v2,startIndex1,startIndex2+N/2,N-N/2);
+    else
+        return returnNth(v1,v2,startIndex1+N/2,startIndex2,N-N/2);
+}
+double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+    int s1=nums1.size(),s2=nums2.size();
+    int a1=returnNth(nums1,nums2,0,0,(s1+s2+1)/2);
+    int a2=returnNth(nums1,nums2,0,0,(s1+s2+2)/2);
+    return (a1+a2)/2.0;
+}
+};
