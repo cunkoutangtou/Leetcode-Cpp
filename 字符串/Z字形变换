@@ -36,7 +36,7 @@ public:
         return re;
     }
 };
-//按Z字型走完整个字符串，同时将每个字符放到应该在的行内，下面两个思路相同，实现不同
+//按Z字型走完整个字符串，同时将每个字符放到应该在的行内，下面两个思路相同，实现不同。
 class Solution {
 public:
     string convert(string s, int numRows) {
