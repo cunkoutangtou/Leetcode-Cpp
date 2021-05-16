@@ -1,0 +1,89 @@
+//使用自动机，将状态预先存储在表中
+class automachine{
+    public:
+    int sign=1;
+    long long ans=0;
+    void get(char c){
+        state=s_t[state][getcol(c)];
+        if(state=="num"){
+        ans=ans*10+c-'0';
+        if(ans>2147483647&&sign==1)
+        ans=2147483647;
+        if(ans>2147483648&&sign==-1)
+        ans=2147483648;
+        }
+        else if(state=="sign")
+        sign=c=='+'?sign:-sign;
+    }
+    private:
+    string state="start";
+    map<string,vector<string>> s_t={
+        {"start",{"start","sign","num","end"}},
+        {"sign",{"end","end","num","end"}},
+        {"num",{"end","end","num","end"}},
+        {"end",{"end","end","end","end"}}
+    };
+    int getcol(char c){
+        if(c==' ')return 0;
+        if(c=='+'||c=='-')return 1;
+        if(48<=c+0&&c+0<=57)return 2;
+        return 3;
+    }
+};
+class Solution {
+public:
+    int myAtoi(string s) {
+        automachine am;
+        for(char c:s){
+            am.get(c);
+        }
+        return am.sign*am.ans;
+    }
+};
+//不使用自动机，速度快，仅适用于状态数较少情况
+class Solution {
+public:
+    int myAtoi(string s) {
+        double res=0;
+        bool neg=true;
+        int i=0;
+        while(i<s.length()){
+            if(s[i]!=' '){
+                break;
+            }
+            i++;
+        }
+        if(s[i]=='-'){
+            neg=false;
+            i++;
+        }else if(s[i]=='+'){
+            neg=true;
+            i++;
+        }
+        if(s[i]>='0'&&s[i]<='9'){
+            while(i<s.length()){
+                if(s[i]>='0'&&s[i]<='9'){
+                    res=res*10+s[i]-'0';
+                    if(neg&&res>=INT_MAX){
+                        res=INT_MAX;
+                        return (int)res;
+                    }
+                    if(!neg&&-res<=INT_MIN){
+                        res=INT_MIN;
+                        return (int)res;
+                    }
+
+                }else{
+                    break;
+                }
+                i++;
+            }
+            if(!neg){
+                res*=-1;
+            }
+        }else{
+            return (int)res;
+        }
+        return (int)res;
+    }
+};
