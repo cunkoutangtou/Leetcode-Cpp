@@ -1,0 +1,55 @@
+//固定第一个数，扫描剩下的两个数，左右两端都会移动
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        if(nums.size()<3)
+        return {};
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> re;
+        for(int i=0;i<nums.size()-2;i++){
+            if(i>0&&nums[i]==nums[i-1])
+            continue;
+            int target=-nums[i];
+            for(int k=i+1,j=nums.size()-1;k<j;){
+                if(nums[k]+nums[j]<target)
+                k++;
+                else if(nums[k]+nums[j]>target)
+                j--;
+                else{
+                re.push_back({nums[i],nums[k],nums[j]});
+                k++;
+                j--;
+                while(nums[k]==nums[k-1]&&k<j)k++;
+                while(nums[j]==nums[j+1]&&j>k)j--;
+                }
+            }
+        }
+        return re;
+    }
+};
+//固定第一个数，然后固定第二个数，扫描第三个数
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        if(nums.size()<3)
+        return {};
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> re;
+        for(int i=0;i<nums.size()-2;i++){
+            if(i>0&&nums[i]==nums[i-1])
+            continue;
+            int target=-nums[i];
+            for(int k=i+1,j=nums.size()-1;k<j;k++){
+                if(k>i+1&&nums[k]==nums[k-1])
+                continue;
+                while(k<j&&nums[k]+nums[j]>target)
+                j--;
+                if(k==j)
+                break;
+                if(nums[k]+nums[j]==target)
+                re.push_back({nums[i],nums[k],nums[j]});
+            }
+        }
+        return re;
+    }
+};
