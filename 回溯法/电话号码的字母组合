@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if(digits.size()==0)
+        return {};
+        map<char,string> m{
+            {'2',"abc"},{'3',"def"},{'4',"ghi"},{'5',"jkl"},
+            {'6',"mno"},{'7',"pqrs"},{'8',"tuv"},{'9',"wxyz"}
+        };
+        string comb;
+        vector<string> combs;
+        back(combs,comb,0,m,digits);
+        return combs;
+    }
+    void back(vector<string> &combs,string &comb,int index,map<char,string> &m,string &digits){
+        if(index==digits.size()){
+            combs.push_back(comb);
+            return;
+        }
+        string temp=m[digits[index]];
+        for(char &c:temp){
+            comb.push_back(c);
+            back(combs,comb,index+1,m,digits);
+            comb.pop_back();
+        }
+    }
+};
