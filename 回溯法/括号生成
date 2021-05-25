@@ -1,0 +1,45 @@
+数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且有效的括号组合。
+
+
+示例 1：
+
+输入：n = 3
+输出：["((()))","(()())","(())()","()(())","()()()"]
+示例 2：
+
+输入：n = 1
+输出：["()"]
+ 
+
+提示：
+
+1 <= n <= 8
+
+链接：https://leetcode-cn.com/problems/generate-parentheses
+
+//深度优先进行回溯，通过剪枝避免不必要的遍历。(也可用动态规划)
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> re;
+        string s{""};
+        back(re,s,1,0,0,n);
+        return re;
+    }
+    void back(vector<string> &re,string &cur,int index,int left,int right,int n){
+        if(index>2*n){
+            re.push_back(cur);
+            return;
+        }
+        if(left<n){
+            cur+='(';
+            back(re,cur,index+1,left+1,right,n);
+            cur.pop_back();
+        }
+        if(right<left){
+            cur+=')';
+            back(re,cur,index+1,left,right+1,n);
+            cur.pop_back();
+        }
+    }
+};
