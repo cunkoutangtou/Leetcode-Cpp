@@ -52,8 +52,10 @@ public:
         return;
         }
         recall(re,temp,candidates,target,ind+1);//跳过
+        if(target-candidates[ind]>=0){//剪枝，减少不必要的回溯
         temp.push_back(candidates[ind]);
-        recall(re,temp,candidates,target-candidates[ind],ind);//继续用
+        recall(re,temp,candidates,target-candidates[ind],ind);
         temp.pop_back();
+        }
     }
 };
