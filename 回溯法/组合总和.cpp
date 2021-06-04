@@ -59,3 +59,31 @@ public:
         }
     }
 };
+//通过初始循环变量i=index，每选择一个元素就把与它有关的所有可能组合记录下来，下一次递归就完全不包含这个元素。
+class Solution {
+public:
+    void backTrack(vector<int>& candidates, int target, vector<vector<int>>& ans, vector<int>& seq, int index) {
+        if(target < 0) {
+            return;
+        }
+        if (target == 0) {
+            ans.push_back(seq);
+            return;
+        }
+            
+
+        for(int i = index; i < candidates.size(); i++) {
+            seq.push_back(candidates[i]);
+            backTrack(candidates, target - candidates[i], ans, seq, i);
+            seq.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans = {};
+        vector<int> seq = {};
+
+        backTrack(candidates, target, ans, seq, 0);
+        return ans;
+    }
+};
