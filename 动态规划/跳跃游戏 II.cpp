@@ -53,9 +53,11 @@ public:
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int rb=0,step=0,maxp=0;;
-        for(int i=0;rb<nums.size()-1;i++){
+        int rb=0,step=0,maxp=0,l=nums.size();        
+        for(int i=0;i<l-1;i++){
             maxp=max(i+nums[i],maxp);
+            if(maxp>=l-1)
+            return ++step;
             if(i==rb){
                 rb=maxp;
                 step++;
