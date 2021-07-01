@@ -23,7 +23,7 @@
 
 链接：https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof
 
-//由于不需要delete节点，单指针就够用了。
+//由于不需要delete节点，单指针就够用了。如果题目给的不是被删节点的值而是它的地址，若不是尾结点则可通过其将其后的值复制到它这，然后删除后面的节点来保证O（1）的复杂度。
 /**
  * Definition for singly-linked list.
  * struct ListNode {
