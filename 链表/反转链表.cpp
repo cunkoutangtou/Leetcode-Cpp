@@ -15,6 +15,14 @@
 链接：https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof
 
 //下面两种方式一样，只是获取头结点的方式不同。
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
@@ -45,5 +53,23 @@ public:
         head->next->next = head;
         head->next = nullptr;
         return newHead;
+    }
+};
+//迭代法，记录当前节点的前后节点即可。
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) {
+            return head;
+        }
+        ListNode *cur=head;
+        ListNode *pre=nullptr;
+        while(cur){
+            ListNode *temp=cur->next;
+            cur->next=pre;
+            pre=cur;
+            cur=temp;
+        }
+        return pre;
     }
 };
