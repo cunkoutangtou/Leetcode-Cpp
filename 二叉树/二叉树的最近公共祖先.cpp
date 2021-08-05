@@ -113,16 +113,16 @@ public:
         fa[0][root]=nullptr;
         fa[1][root]=nullptr;
         visited[p]=true;
-        while(fa[0].count(p)){
+        while(p){
             visited[fa[0][p]]=true;
             p=fa[0][p];
         }
-        while(fa[1].count(q)){
+        while(q){
             if(visited[q])
             return q;
             q=fa[1][q];
         }
-        return root;
+        return nullptr;
     }
     void dfs(TreeNode *root,TreeNode *r,unordered_map<TreeNode*,TreeNode*> &m){
         if(root==r){
