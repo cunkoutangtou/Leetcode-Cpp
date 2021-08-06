@@ -75,3 +75,42 @@ public:
         return re;
     }
 };
+
+//遍历矩阵，永远可以相信dfs;
+class Solution {
+    int m,n;
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        if(grid.empty())
+        return 0;
+        int maxa=0,cura=0; 
+        m=grid.size();
+        n=grid[0].size();
+        vector<vector<int>> sign(m,vector<int>(n));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(!sign[i][j]&&grid[i][j]==1){
+                    cura=0;
+                    dfs(grid,sign,i,j,cura);
+                    maxa=max(maxa,cura);
+                }
+            }
+        }
+        return maxa;
+    }
+    void dfs(vector<vector<int>>& grid,vector<vector<int>>& sign,int x,int y,int &cura){
+        if(sign[x][y])
+        return;
+        //注意这里是需要统计个数，一个位置永远只会被访问一次，所以不用回溯。
+        cura++;
+        sign[x][y]=1;
+        if(x<m-1&&grid[x+1][y]==1)
+        dfs(grid,sign,x+1,y,cura); 
+        if(x>0&&grid[x-1][y]==1)
+        dfs(grid,sign,x-1,y,cura); 
+        if(y<n-1&&grid[x][y+1]==1)
+        dfs(grid,sign,x,y+1,cura); 
+        if(y>0&&grid[x][y-1]==1)
+        dfs(grid,sign,x,y-1,cura); 
+    }
+};
