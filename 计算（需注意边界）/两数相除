@@ -26,7 +26,7 @@
 
 链接：https://leetcode-cn.com/problems/divide-two-integers
 
-//要注意有符号数下边界和上边界绝对值差1。从第32位开始找齐所满足可整除除数的位，然后加起来。
+//2进制除法，和十进制一样，就是从第一个能整除除数的位开始统计。
 class Solution {
 public:
     int divide(int dividend, int divisor) {
@@ -34,19 +34,20 @@ public:
         if(dividend==INT_MIN&&divisor==-1)return INT_MAX;
         if(dividend==divisor)return 1;
         int re=0;
-        bool pos=dividend>=0==divisor>=0;
-        long long a=dividend>0?dividend:-(long long)dividend;
+        bool pos=dividend>=0==divisor>=0;//判断异号
+        long long a=dividend>0?dividend:-(long long)dividend;//注意先转换再变号
         long long b=divisor>0?divisor:-(long long)divisor;
+        //从最高位开始找，能整除b则在当前位，置1。
         for(int i=31;i>=0;i--){
             if(a>>i>=b){
-            re+=1<<i;
-            a-=b<<i;
+            re+=1<<i;//代表到达第i位时整除了b
+            a-=b<<i;//用过的高位减去b
             }
         }
         return pos?re:-re;
     }
 };
-//从除数所有的最高位开始，逐渐找齐所有满足整除除数的位加起来
+//10进制除法，利用幂的思想，实际上相当于从只有1个除数开始指数递增，直到达到被除数上限，count代表除数翻倍了几次。
 class Solution {
 public:
     int divide(int dividend, int divisor) {
@@ -64,8 +65,8 @@ public:
         return 0;
         int count=1;
         auto tb=b;
-        while(tb+tb<=a){
-            count=count+count;
+        while(tb+tb<=a){//不能翻倍了就停止。
+            count=count+count;//tb翻倍几次，count也会翻倍几次。
             tb=tb+tb;
         }
         return count+div(a-tb,b);
