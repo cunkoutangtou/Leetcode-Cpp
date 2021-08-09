@@ -37,7 +37,7 @@ public:
         vector<int> sign(n);
         for(int i=0;i<n;i++)
         for(int j=0;j<words[i].size();j++){
-            sign[i]|=1<<(words[i][j]-'a');
+            sign[i]|=1<<(words[i][j]-'a');//注意这里使用或运算将int型变量每个位置当作一个标志位的方式。
         }
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
