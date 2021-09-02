@@ -43,7 +43,7 @@ public:
             while(!st.empty()&&heights[st.top()]>heights[i]){//不满足递增则处理
                 int cur=heights[st.top()];
                 st.pop();
-                int left=st.top()+1;//宽度计算方式为包含右边界，不包含左边界
+                int left=st.top()+1;//宽度计算方式为包含右边界，不包含左边界，从右往左高度减小，宽度增加。
                 int right=i-1;
                 m=max(m,(right-left+1)*cur);
             }
