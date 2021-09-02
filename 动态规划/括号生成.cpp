@@ -17,6 +17,7 @@
 1 <= n <= 8
 
 链接：https://leetcode-cn.com/problems/generate-parentheses
+
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
@@ -34,5 +35,32 @@ public:
             }
         }   
         return dp[n];
+    }
+};
+
+//先不断放左括号，然后在尝试右括号，先序遍历的思想。
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> re;
+        string s{""};
+        back(re,s,1,0,0,n);
+        return re;
+    }
+    void back(vector<string> &re,string &cur,int index,int left,int right,int n){
+        if(index>2*n){
+            re.push_back(cur);
+            return;
+        }
+        if(left<n){
+            cur+='(';
+            back(re,cur,index+1,left+1,right,n);
+            cur.pop_back();
+        }
+        if(right<left){
+            cur+=')';
+            back(re,cur,index+1,left,right+1,n);
+            cur.pop_back();
+        }
     }
 };
