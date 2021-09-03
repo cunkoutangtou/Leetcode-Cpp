@@ -45,7 +45,7 @@ public:
         return re;
     }
 };
-//使用单调栈，不断将栈数组序号按顺序放入栈中，当遇到数组值大于栈顶索引对应的数组值时计算。
+//使用单调递减栈，不断将栈数组序号按顺序放入栈中，当遇到数组值大于栈顶索引对应的数组值时计算。
 class Solution {
 public:
     int trap(vector<int>& height) {
@@ -61,7 +61,7 @@ public:
                 break;
                 int left=sta.top();
                 int wide=i-left-1;
-                int h=min(height[left],height[i])-height[middle];//left和i为左右边界，height[middle]为
+                int h=min(height[left],height[i])-height[middle];//left和i为左右边界，height[middle]为当前要计算位置的高度。
                 re+=h*wide;
             }
             sta.push(i);
