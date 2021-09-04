@@ -142,7 +142,7 @@ public:
                         q.pop();
                         if(row<m-1&&grid[row+1][col]=='1'){
                             q.push({row+1,col});
-                            grid[row+1][col]='0';//注意入队后要立即置0，否则可能会有元素重复入队
+                            grid[row+1][col]='0';//用grid直接标记是否访问过，要注意入队后要立即置0，否则可能会有元素重复入队
                         }
                         if(col<n-1&&grid[row][col+1]=='1'){
                             q.push({row,col+1});
