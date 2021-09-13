@@ -10,9 +10,7 @@ public:
         int begin = 0, maxL = 1;
         vector<vector<int>> dp(n, vector<int>(n, 0));
         for (int i = 0; i < n; i++)
-        {
-            dp[i][i] = 1;
-        }
+        dp[i][i] = 1;
         //从长度为2的子串开始寻找
         for (int L = 2; L <= n; L++)
         {
@@ -55,6 +53,45 @@ public:
         return s.substr(begin, maxL);
     }
 };
+//先把L=1和2的情况计算一遍
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.empty())
+        return {};
+        int n=s.size();
+        vector<vector<int>> dp(n,vector<int>(n));
+        for(int i=0;i<n;i++){
+            dp[i][i]=1;
+        }
+        int re=1,l=0;
+        for(int i=0;i<n-1;i++){
+            if(s[i]==s[i+1]){
+                dp[i][i+1]=1;
+                re=2;
+                l=i;
+            }
+        }
+        for(int L=3;L<=n;L++){
+            for(int i=0;i<n-L+1;i++){
+                int j=i+L-1;
+                if(j>=n)
+                break;
+                if(s[i]==s[j])
+                dp[i][j]=dp[i+1][j-1];
+                else
+                dp[i][j]=0;
+                if(dp[i][j]){
+                    if(j-i+1>re){
+                        re=j-i+1;
+                        l=i;
+                    }
+                }
+            }
+        }
+        return s.substr(l,re);
+    }
+};
 //中心扩散
 class Solution {
 public:
@@ -82,5 +119,30 @@ public:
             }
         }
         return s.substr(start,end-start+1);
+    }
+};
+//快速中心扩散
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.empty())
+        return {};
+        int n=s.size();
+        int maxl=1,l=0;;
+        for(int i=0;i<n;){
+            int left=i,right=i;
+            while(right<n&&s[right]==s[right+1])
+            right++;
+            i=right+1;
+            while(left>=0&&right<n&&s[left]==s[right]){
+                left--;
+                right++;
+            }
+            if(right-left-1>maxl){
+                maxl=right-left-1;
+                l=left+1;
+            }
+        }
+        return s.substr(l,maxl);
     }
 };
