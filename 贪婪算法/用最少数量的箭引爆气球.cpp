@@ -56,3 +56,23 @@ public:
         return re;
     }
 };
+//动态规划，只要有两个区间不重叠，则一定无法用一支箭把它们同时射爆，所以问题转换为求最大不重叠区间个数。
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        if(points.empty())
+        return 0;
+        sort(points.begin(),points.end(),[](auto& a,auto& b){//需要从左向右找每个区间左面有几个和它不重叠的区间。
+            return a[0]<b[0];
+        });
+        int n=points.size();
+        vector<int> dp(n,1);
+        for(int i=1;i<n;i++){//求第i个区间及其左侧最多有多少个不重叠区间
+            for(int j=0;j<i;j++){
+                if(points[j][1]<points[i][0])
+                dp[i]=max(dp[i],dp[j]+1);
+            }
+        }
+        return *max_element(dp.begin(),dp.end());
+    }
+};
