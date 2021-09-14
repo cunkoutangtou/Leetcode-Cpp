@@ -58,12 +58,12 @@ public:
         if(edges.empty())
         return {};
         int n=edges.size();
-        help.resize(2*n);
-        for(int i=0;i<2*n;i++){
+        help.resize(n+1);//数组中的值时1~n，所以初始化为n+1个元素。
+        for(int i=1;i<=n;i++){
             help[i]=i;
         }
         vector<int> re(2,0);
-        rank.resize(2*n,0);
+        rank.resize(n+1,0);
         for(int i=0;i<n;i++){
             if(find(edges[i][0])==find(edges[i][1])){
                 re[0]=edges[i][0];
