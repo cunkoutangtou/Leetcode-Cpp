@@ -116,3 +116,18 @@ public:
         return p;
     }
 };
+//两个链表同时走，一个走完自己的就走另一个的，这样就能弥补两个链表长度不同的差别。
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        int l1=0,l2=0;
+        ListNode *a=headA, *b=headB;
+        while(a!=nullptr||b!=nullptr){
+            if(a==b)
+            return a;
+            a=(a==nullptr)?headB:a->next;
+            b=(b==nullptr)?headA:b->next;
+        }
+        return nullptr;
+    }
+};
