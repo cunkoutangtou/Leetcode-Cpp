@@ -35,7 +35,7 @@ public:
         return 0;
         if(heights.size()==1)
         return heights[0];
-        stack<int> st;
+        stack<int> st;//栈中保证栈顶之下存储的一定是第一个比栈顶小的元素所在的索引，据此即可判断出栈顶元素的左边界。
         heights.insert(heights.begin(),0);//放入哨兵，保证左边界始终一定存在。
         heights.push_back(0);//防止heights递增，保证最后一定能将栈内元素全部弹出。
         int m=0;
